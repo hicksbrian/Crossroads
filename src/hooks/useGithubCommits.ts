@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Commit } from "../types/GithubCommitsResponse";
+import { GithubCommit } from "../types/GithubCommitsResponse";
 
 type useGithubCommitsProps = {
   repoName: string;
@@ -13,7 +13,7 @@ export const useGithubCommits = ({
   githubPersonalToken,
 }: useGithubCommitsProps) => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<Commit[]>();
+  const [data, setData] = useState<GithubCommit[]>();
   const [error, setError] = useState();
 
   useEffect(() => {
@@ -34,7 +34,9 @@ export const useGithubCommits = ({
       setData(data);
     }
 
-    FetchCommits();
+    if (!data) {
+      FetchCommits();
+    }
   }, []);
 
   console.log("data", { data });
